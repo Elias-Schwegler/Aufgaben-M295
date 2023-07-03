@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use app\Models\Bike;
+use app\Models\Book;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,6 +105,39 @@ Route::prefix('hello-vello')->group(function () {
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);    
         return $result;
     });
-
-    
 });
+
+
+
+Route::prefix('hello-vello')->group(function () {
+
+    #Aufgabe 01 Hallo Vello using Model
+    #--------------------------------
+    Route::get('/bikes', function () {
+        return Bike::get();
+    });
+
+    #Aufgabe 02 Hallo Vello using Model
+    #--------------------------------
+    Route::get('/bikes/{id}', function (int $id) {
+        return Bike::find($id);
+    });
+
+});
+
+Route::prefix('bookler')->group(function () {
+
+    #Aufgabe 01 Hallo Vello using Model
+    #--------------------------------
+    Route::get('/books', function () {
+        return Book::get();
+    });
+
+    #Aufgabe 01 Hallo Vello using Model
+    #--------------------------------
+    Route::get('/books/{id}', function (int $id) {
+        return Book::find($id);
+    });
+
+});
+
