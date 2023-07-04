@@ -13,8 +13,8 @@ class Book extends Model
         'title',
         'author',
         'slug',
-        'year',
         'pages',
+        'year',
     ];
 
     
