@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use app\Models\Bike;
-use app\Models\Book;
+use App\Models\Bike;
+use App\Models\Book;
 
 /*
 |--------------------------------------------------------------------------
@@ -127,17 +127,58 @@ Route::prefix('hello-vello')->group(function () {
 
 Route::prefix('bookler')->group(function () {
 
-    #Aufgabe 01 Hallo Vello using Model
+    #Aufgabe 01 Bookler using Model
     #--------------------------------
     Route::get('/books', function () {
         return Book::get();
     });
 
-    #Aufgabe 01 Hallo Vello using Model
+    #Aufgabe 01 Bookler using Model
     #--------------------------------
     Route::get('/books/{id}', function (int $id) {
         return Book::find($id);
     });
 
+     #Aufgabe 03 Bookler using Model
+    #--------------------------------
+    Route::get('/book-finder/slug/{slug}', function (string $slug) {
+        return Book::where('slug','like', $slug.'%')->get();
+    });
+    
+    #Aufgabe 04 Bookler using Model
+    #--------------------------------
+    Route::get('/book-finder/year/{year}', function (int $year) {
+        return Book::where('year', $year)->get();
+    });
+    #Aufgabe 05 Bookler using Model
+    #--------------------------------
+    Route::get('/book-finder/max-pages/{pages}', function (int $pages) {
+        return Book::where('pages', '<', $pages)->get();
+    });
+    #Aufgabe 06 Bookler using Model
+    #--------------------------------
+    Route::get('/search/{search}', function (string $search) {
+        return Book::where('title', 'like', '%' . $search . '%')
+                    ->orWhere('author', 'like', '%' . $search . '%')->get();
+    });
+    #Aufgabe 07 Bookler using Model
+    #--------------------------------
+    Route::get('/meta/count', function () {
+        return ['count' => Book::count()];
+    });
+    
+    Route::get('/meta/avg-pages', function () {
+        return ['avg-pages' => Book::avg('pages')];
+    });
+    #Aufgabe 08 Bookler using Model
+    #--------------------------------
+    Route::get('/dashboard', function () {
+        return [
+            'books' => Book::count(),
+            'pages' => Book::sum('pages'),
+            'oldest' => Book::orderBy('year', 'asc')->first()->title,
+            'newest' => Book::orderBy('year', 'desc')->first()->title,
+        ];
+    });
 });
 

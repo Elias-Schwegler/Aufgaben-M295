@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('firstname'); // first name of the person making the reservation
             $table->string('lastname'); // last name of the person making the reservation
-            $table->string('note')->nullable(); // optional note
+            $table->string('note')->nullable(); // optional note kann auch null sein, gibt keine is NULL zurück
             $table->date('date'); // date of the reservation
             $table->integer('nights'); // number of nights for the reservation
             $table->decimal('room_temperature', 5, 2); // preferred room temperature
