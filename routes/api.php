@@ -14,8 +14,16 @@ use App\Models\Book;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "api" middleware group. Make something great!
 |
-| Wenn nichts gemacht wird, also https://Aufgaben_M295/api/hello und dan nicht, dann wird die funktion Welcome.blade.php aufgerufen in ressources.
+# Wenn nichts gemacht wird, also https://Aufgaben_M295.test/api/hello und dan nicht, dann wird die funktion Welcome.blade.php aufgerufen in ressources.
+# /api/ nach der base URL .test/... !!!
 | Achtung Klammer bei return (was auch immer), Klammer mus weg.
+# php artisan make: migration create_videos_table
+# php artisan migrate
+#php artisan migrate:refresh
+#or
+#php artisan migrate:fresh
+#create Model: php artisan make:model <<Book>> -m if migration should be created with it as well
+# in env die DB auswählen ...
 
 */
 
