@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Bike;
 use App\Models\Book;
+use App\Http\Controllers\BookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -167,12 +168,12 @@ Route::prefix('bookler')->group(function () {
     #--------------------------------
     Route::get('/search/{search}', function (string $search) {
         return Book::where('title', 'like', '%' . $search . '%')
-                    ->orWhere('author', 'like', '%' . $search . '%')->get();
-    });
+                    ->orWhere('author', 'like', '%' . $search . '%')->get(); #mit orWhere kannes eines oder das andere sein, sonnst bei zwei where müssten beide zutreffen.
+    }) ->where('search', '[A-z0-9-]+'); #Regular expressions
     #Aufgabe 07 Bookler using Model
     #--------------------------------
     Route::get('/meta/count', function () {
-        return ['count' => Book::count()];
+        return ['count' => Book::count()]; #asoziatives array, erstes element heisst count mit dessen book count.
     });
     
     Route::get('/meta/avg-pages', function () {
@@ -190,3 +191,17 @@ Route::prefix('bookler')->group(function () {
     });
 });
 
+    #Aufgabe XX Bookler Routes using Controller
+    #--------------------------------
+
+Route::prefix('bookler')->group(function () {
+    Route::get('/books', [BookController::class, 'getBooks']);
+    Route::get('/books/{id}', [BookController::class, 'getBookById']);
+    Route::get('/book-finder/slug/{slug}', [BookController::class, 'getBooksBySlug']);
+    Route::get('/book-finder/year/{year}', [BookController::class, 'getBooksByYear']);
+    Route::get('/book-finder/max-pages/{pages}', [BookController::class, 'getBooksByMaxPages']);
+    Route::get('/search/{search}', [BookController::class, 'searchBooks'])->where('search', '[A-z0-9-]+');
+    Route::get('/meta/count', [BookController::class, 'countBooks']);
+    Route::get('/meta/avg-pages', [BookController::class, 'avgPages']);
+    Route::get('/dashboard', [BookController::class, 'dashboard']);
+});
