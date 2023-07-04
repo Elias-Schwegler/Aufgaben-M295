@@ -133,7 +133,7 @@ Route::prefix('hello-vello')->group(function () {
     });
 
 });
-
+/* 
 Route::prefix('bookler')->group(function () {
 
     #Aufgabe 01 Bookler using Model
@@ -190,6 +190,7 @@ Route::prefix('bookler')->group(function () {
         ];
     });
 });
+*/
 
     #Aufgabe XX Bookler Routes using Controller
     #--------------------------------
