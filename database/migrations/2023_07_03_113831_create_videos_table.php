@@ -29,4 +29,8 @@ return new class extends Migration
 
 # php artisan make: migration create_videos_table
 # php artisan migrate
-# in env die db auswählen ...
+#php artisan migrate:refresh
+#or
+#php artisan migrate:fresh
+#create Model: php artisan make:model <<Book>> -m if migration should be created with it as well
+# in env die DB auswählen ...
