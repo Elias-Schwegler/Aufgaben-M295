@@ -4,7 +4,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Bike;
 use App\Models\Book;
-use App\Http\Controllers\BookController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\TagController;
+use App\Models\Post;
+use App\Models\Tag;
+use App\Models\Topic;
+use App\Models\Author;
+use App\Http\Controllers\TopicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -206,3 +212,11 @@ Route::prefix('bookler')->group(function () {
     Route::get('/meta/avg-pages', [BookController::class, 'avgPages']);
     Route::get('/dashboard', [BookController::class, 'dashboard']);
 });
+
+
+#Route::get('/topics/{slug}/posts', [TopicController::class, 'postsByTopic']);
+#Route::get('/tags/{tagSlug}/posts', [TagController::class, 'postsByTag']);
+
+Route::get('/relationsheep/posts', [PostController::class, 'index']);
+Route::get('/relationsheep/topics/{slug}/posts', [PostController::class, 'postsByTopic']);
+

@@ -9,7 +9,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            AuthorsTableSeeder::class,
             BooksTableSeeder::class,
+            TopicsTableSeeder::class,
+            PostsTableSeeder::class,
         ]);
     }
 }
