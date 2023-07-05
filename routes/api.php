@@ -219,4 +219,9 @@ Route::prefix('bookler')->group(function () {
 
 Route::get('/relationsheep/posts', [PostController::class, 'index']);
 Route::get('/relationsheep/topics/{slug}/posts', [PostController::class, 'postsByTopic']);
-
+# Aufgaben Ackerer
+Route::prefix('ackerer')->group(function () {
+    Route::get('/plants', [PlantController::class, 'getPlants']);
+    Route::get('/plants/{slug}', [PlantController::class, 'getPlant']);
+    Route::get('/farmers', [PlantController::class, 'getFarms']);
+});
