@@ -4,28 +4,36 @@ namespace App\Http\Controllers;
 
 use App\Models\Clown;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreClownRequest;
+use App\Http\Resources\ClownResource;
 
 class ClownController extends Controller
 {
     public function index()
     {
-        return Clown::all();
+        $clowns = Clown::get();
+        return ClownResource::collection($clowns);
     }
+
+    #$clown= Clown::create($request -> validated())
+    #return ClownResource::make($clown);;
+
+
 
     public function show($id)
     {
         $clown = Clown::find($id);
     
         if ($clown) {
-            return response()->json($clown, 200);
+            return response()->json(ClownResource::make($clown), 200);
         } else {
             return response()->json('Clown mit id= ' . $id . ' wurde nicht gefunden.', 404);
         }
     }
-    public function store(Request $request)
+    public function store(StoreClownRequest $request)
     {
- 
-        $clown = Clown::create($request->all());
+        $newClown = $request -> validated();
+        $clown = Clown::create($newClown);
 
         if ($clown) {
             return response()->json([
@@ -37,12 +45,14 @@ class ClownController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(StoreClownRequest $request, $id)
+    {   
+        $newClown = $request -> validated();
         $clown = Clown::find($id);
 
         if ($clown) {
-            $clown->update($request->all());
+            $clown->update($newClown);
+            $clown = $clown->fresh();  // Reload the model from the database
             return response()->json([
                 'message' => 'Clown wurde erfolgreich aktualisiert.',
                 'clown' => $clown
@@ -50,6 +60,7 @@ class ClownController extends Controller
         } else {
             return response()->json('Clown wurde nicht gefunden.', 404);
         }
+        
     }
 
     

@@ -240,13 +240,22 @@ Route::prefix('ackerer')->group(function () {
 });
 
 
-
-
+Route::prefix('api')->group(function () {
+    Route::get('/plants', [PlantController::class, 'getPlants']);
+});
 
 
 
 Route::middleware('api')->group(function () {
     Route::resource('/r-rest/clowns', ClownController::class);
+});
+
+Route::prefix('/r-rest')->group(function () {
+    Route::get('/clowns', [ClownController::class, 'index']);
+    Route::get('/clowns/{id}', [ClownController::class, 'show']);
+    Route::post('/clowns', [ClownController::class, 'store']);
+    Route::put('/clowns/{id}', [ClownController::class, 'update']);
+    Route::delete('/clowns/{id}', [ClownController::class, 'destroy']);
 });
 
 /*
