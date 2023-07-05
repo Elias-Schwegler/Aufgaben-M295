@@ -11,6 +11,8 @@ use App\Models\Tag;
 use App\Models\Topic;
 use App\Models\Author;
 use App\Http\Controllers\TopicController;
+use App\Http\Controllers\ClownController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -224,4 +226,11 @@ Route::prefix('ackerer')->group(function () {
     Route::get('/plants', [PlantController::class, 'getPlants']);
     Route::get('/plants/{slug}', [PlantController::class, 'getPlant']);
     Route::get('/farmers', [PlantController::class, 'getFarms']);
+});
+
+
+
+
+Route::middleware('api')->group(function () {
+    Route::get('/r-rest/clowns', [ClownController::class, 'index']);
 });
