@@ -221,6 +221,17 @@ Route::prefix('bookler')->group(function () {
 
 Route::get('/relationsheep/posts', [PostController::class, 'index']);
 Route::get('/relationsheep/topics/{slug}/posts', [PostController::class, 'postsByTopic']);
+
+Route::prefix('/relationsheep')->group(function () {
+    Route::post('/posts', [PostController::class, 'store']);
+    Route::put('/posts/{id}', [PostController::class, 'update']);
+    Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+
+});
+
+
+
+
 # Aufgaben Ackerer
 Route::prefix('ackerer')->group(function () {
     Route::get('/plants', [PlantController::class, 'getPlants']);

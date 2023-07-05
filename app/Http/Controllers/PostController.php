@@ -2,24 +2,66 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
-use App\Models\Post;    // Add this
-use App\Models\Topic;  // Add this
-use App\Models\Author; // Add this
 
 class PostController extends Controller
 {
-    public function index() {
-        $posts = Post::with(['topic', 'author'])->get()->map(function ($post) {
-            return [
-                'id' => $post->id,
-                'title' => $post->title,
-                'content' => $post->content,
-                'topic' => $post->topic->name,
-            ];
-        });
+    public function index()
+    {
+        return Post::with(['topic', 'author'])->get();
+    }
 
-        return $posts;
+    public function show($id)
+    {
+        $post = Post::find($id);
+    
+        if ($post) {
+            return response()->json($post, 200);
+        } else {
+            return response()->json('Post mit id= ' . $id . ' wurde nicht gefunden.', 404);
+        }
+    }
+
+    public function store(Request $request)
+    {
+        $post = Post::create($request->all());
+
+        if ($post) {
+            return response()->json([
+                'message' => 'Post erfolgreich erstellt.',
+                'post' => $post
+            ], 201);
+        } else {
+            return response()->json('Fehler beim Erstellen des Posts.', 500);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $post = Post::find($id);
+
+        if ($post) {
+            $post->update($request->all());
+            return response()->json([
+                'message' => 'Post wurde erfolgreich aktualisiert.',
+                'post' => $post
+            ], 200);
+        } else {
+            return response()->json('Post wurde nicht gefunden.', 404);
+        }
+    }
+
+    public function destroy($id)
+    {
+        $post = Post::find($id);
+    
+        if ($post) {
+            $post->delete();
+            return response()->json('Post wurde gelöscht.', 200);
+        } else {
+            return response()->json('Post wurde nicht gefunden.', 404);
+        }
     }
 
     public function postsByTopic(string $search) {
@@ -31,7 +73,7 @@ class PostController extends Controller
             })
             ->get();
 
-        if($posts){
+        if(count($posts) > 0){
             return $posts->map(function ($post) {
                 return [
                     'id' => $post->id,
@@ -44,7 +86,5 @@ class PostController extends Controller
         else {
             return response('Not Found', 404);
         }
-        
     }
-
 }

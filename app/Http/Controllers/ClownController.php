@@ -12,31 +12,59 @@ class ClownController extends Controller
         return Clown::all();
     }
 
-    public function show(Clown $clown)
+    public function show($id)
     {
-        return $clown;
+        $clown = Clown::find($id);
+    
+        if ($clown) {
+            return response()->json($clown, 200);
+        } else {
+            return response()->json('Clown mit id= ' . $id . ' wurde nicht gefunden.', 404);
+        }
     }
-
     public function store(Request $request)
     {
+ 
         $clown = Clown::create($request->all());
 
-        return response()->json($clown, 201);
+        if ($clown) {
+            return response()->json([
+                'message' => 'Clown erfolgreich erstellt.',
+                'clown' => $clown
+            ], 201);
+        } else {
+            return response()->json('Fehler beim Erstellen des Clowns.', 500);
+        }
     }
 
-    public function update(Request $request, Clown $clown)
+    public function update(Request $request, $id)
     {
-        $clown->update($request->all());
+        $clown = Clown::find($id);
 
-        return response()->json($clown, 200);
+        if ($clown) {
+            $clown->update($request->all());
+            return response()->json([
+                'message' => 'Clown wurde erfolgreich aktualisiert.',
+                'clown' => $clown
+            ], 200);
+        } else {
+            return response()->json('Clown wurde nicht gefunden.', 404);
+        }
     }
 
-    public function destroy(Clown $clown)
+    
+    public function destroy($id)
     {
-        $clown->delete();
-
-        return response()->json(null, 204);
+        $clown = Clown::find($id);
+    
+        if ($clown) {
+            $clown->delete();
+            return response()->json('Clown mit id= ' . $id . ' wurde gelöscht.', 200);
+        } else {
+            return response()->json('Clown mit id= ' . $id . ' wurde nicht gefunden.', 404);
+        }
     }
+    
     /*Plenum
     
     public function delete($request $id){
