@@ -10,7 +10,7 @@ class TopicsTableSeeder extends Seeder
 {
     public function run()
     {
-        Topic::factory()->count(10)->create();
+        Topic::factory()->count(10)->hasPosts(3)->create();
         #Jedes Topic solte mid 3 Posts haben
     }
 }
