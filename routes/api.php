@@ -231,6 +231,19 @@ Route::prefix('ackerer')->group(function () {
 
 
 
+
+
+
 Route::middleware('api')->group(function () {
-    Route::get('/r-rest/clowns', [ClownController::class, 'index']);
+    Route::resource('/r-rest/clowns', ClownController::class);
 });
+
+/*
+
+GET /api/r-rest/clowns (maps to the index method, shows a list of clowns)
+GET /api/r-rest/clowns/{id} (maps to the show method, shows a specific clown)
+POST /api/r-rest/clowns (maps to the store method, creates a new clown)
+PUT or PATCH /api/r-rest/clowns/{id} (maps to the update method, updates a specific clown)
+DELETE /api/r-rest/clowns/{id} (maps to the destroy method, deletes a specific clown)
+
+*/
